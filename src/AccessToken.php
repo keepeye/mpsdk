@@ -38,7 +38,7 @@ class AccessToken implements Contracts\AccessToken
             'appid' => $this->getAppId(),
             'secret' => $this->getAppSecret()
         );
-        $result = $this->http->send(self::API_URL,HttpClient::METHOD_GET,$params);
+        $result = $this->http->get(self::API_URL,$params);
         return $result['access_token'];
     }
 

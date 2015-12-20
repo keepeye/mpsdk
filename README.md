@@ -28,3 +28,41 @@ access_token是一个凭证，公众号大部分接口都用到它，普通的�
     echo $myAccessToken->get();
 
 之所以要约定接口，因为其他类依赖AccessToken对象，参考之后的接口。
+
+###网页授权oauth
+
+基本用法很简单，只需要在控制器执行之前加上下面的逻辑:
+
+    $oauth = new \Keepeye\Mpsdk\OAuth($appId,$appSecret);
+    if (!$_SESSION['openid']) {
+        if ($user = $oauth->authorize('snsapi_userinfo')) {
+            $_SESSION['openid'] = $user['openid'];
+            $_SESSION['nickname'] = $user['nickname'];
+            //...如果第二个参数是snsapi_base，那么这里只会取到openid
+        } else {
+            exit('用户禁止授权');
+        }
+    }
+
+当然，这里有个陷阱，授权成功后url上是带有code参数的，如果用户将页面分享出去，再次访问这个地址会报code无效错误。
+
+我个人建议这么处理：
+
+    //控制器过滤器逻辑如下，我们把微信授权单独在一个控制器中处理
+    if (!$_SESSION['openid']) {
+        $_SESSION['referer'] = Request::fullUrl();//将当前url保存到session
+        return Response::redirect('/auth/wxOauth');
+    }
+
+    //假设下面是 /auth/wxOauth 的部分代码
+    if ($user = $oauth->authorize('snsapi_userinfo')) {
+        $_SESSION['openid'] = $user['openid'];
+        $_SESSION['nickname'] = $user['nickname'];
+        //...如果第二个参数是snsapi_base，那么这里只会取到openid
+        //授权成功以后就相当于登录成功，跳转回登录前的页面，这样就避免了url中残留code参数
+        $referer = $_SESSION['referer'];
+        unset($_SESSION['referer']);
+        return Response::redirect($referer);
+    } else {
+        exit('用户禁止授权');
+    }

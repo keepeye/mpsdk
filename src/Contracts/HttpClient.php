@@ -13,5 +13,6 @@ interface HttpClient
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
 
-    public function send($url,$method,$params=array());
+    public function get($url,$params=array());
+    public function post($url,$params=array());
 }

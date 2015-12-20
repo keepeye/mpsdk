@@ -1,0 +1,33 @@
+{
+  "name": "keepeye/mpsdk",
+  "description": "一个微信公众号开发sdk",
+  "keywords": ["weixin", "wechat", "mp"],
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "吾爱",
+      "email": "carlton.cheng@foxmail.com",
+      "homepage": "http://www.github.com/keepeye",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "ext-mcrypt" : "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Keepeye\\Mpsdk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+
+  },
+  "config": {
+    "preferred-install": "source"
+  }
+}

@@ -1,5 +1,32 @@
 # mpsdk
-一个微信公众号开发的sdk，借鉴 https://github.com/overtrue/wechat
+一个微信公众号开发的sdk，借鉴 https://github.com/overtrue/wechat，做了一些适合自己的简化和调整。
+
+### 接入和消息回复
+
+    $server = new Keepeye\Mpsdk\Server($wxconfig['token'],$wxconfig['appId'],$wxconfig['EncodingAESKey']);
+    //消息回复,所有消息被当做同一个事件message
+    //$input参数只是将微信推过来的xml转化成数组，方便直接取用。
+    $server->on('message',function($input){
+        $keyword = $input['Content'];//用户发送的消息内容
+        $type = $inpt['MsgType'];//消息类型，有text，image等，参考官方wiki
+        return "你好，没找到关于".$keyword."的内容";//简单返回一个文本回复
+        //回复一个图文
+        return Keepeye\Mpsdk\Message::make('news')->items(array(
+              Message::make('news_item')->title('测试标题'),
+              Message::make('news_item')->title('测试标题2')->description('好不好？'),
+              Message::make('news_item')->title('测试标题3')->description('好不好说句话？')->url('http://baidu.com'),
+              Message::make('news_item')->title('测试标题4')->url('http://baidu.com/abc.php')->picUrl('http://www.baidu.com/demo.jpg'),
+         ));
+    });
+    //关注事件
+    $server->on('subscribe',function($input){});
+    //..等等其他事件名请参考http://mp.weixin.qq.com/wiki/7/9f89d962eba4c5924ed95b513ba69d9b.html
+
+    //全局返回，可用作默认的自动回复
+    $server->on('global',function($input){
+        return $input['FromUserName'];//返回用户openid
+    });
+    echo $server->handle();
 
 ### AccessToken获取
 

@@ -1,5 +1,5 @@
 # mpsdk
-一个微信公众号开发的sdk，借鉴 https://github.com/overtrue/wechat，做了一些适合自己的简化和调整。
+一个轻量级的微信公众号开发的sdk
 
 ### 接入和消息回复
 
@@ -93,3 +93,16 @@ access_token是一个凭证，公众号大部分接口都用到它，普通的�
     } else {
         exit('用户禁止授权');
     }
+
+
+### 说明
+
+大量借鉴了 [overtrue/wechat](https://github.com/overtrue/wechat) 这个包，做了大量的调整和优化。
+
+
+ps.反正吹牛逼不用上税，哈哈哈哈
+
+
+### 贡献
+
+fork，然后clone到本地，创建自己的分枝，创建pull request。

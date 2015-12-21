@@ -35,7 +35,7 @@ class OAuth
         $this->setAppId($appId);
         $this->setAppSecret($appSecret);
         $this->request = new Request();
-        $this->http = $this->setHttp($http?:new Http());
+        $this->setHttp($http?:new Http());
     }
 
     /**

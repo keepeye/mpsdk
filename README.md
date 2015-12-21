@@ -1,5 +1,5 @@
 # mpsdk
-一个微信公众号开发的sdk
+一个微信公众号开发的sdk，借鉴 https://github.com/overtrue/wechat
 
 ### AccessToken获取
 
